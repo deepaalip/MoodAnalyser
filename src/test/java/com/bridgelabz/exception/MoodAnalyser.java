@@ -1,8 +1,9 @@
 package com.bridgelabz.exception;
 
-
+import com.bridgelabz.exception.MoodAnalyserException.ExceptionType;
 
 public class MoodAnalyser {
+	
 	  String message ; 
 	
 	
@@ -11,20 +12,26 @@ public class MoodAnalyser {
 		  this.message = message;
 	}
 
-   public String analyseMood(String message) {
-	   this.message = message;
-	   return analyseMood();
-   }
-	public String  analyseMood() {
+  
+	public String  analyseMood() throws MoodAnalyserException {
 	try {
-		  if(message.contains("Sad")) {
+		  if(message == null) {
+			  throw new  MoodAnalyserException("Message cast can't be null",ExceptionType.Null);
+		  }
+		  else if(message.equals("")){
+			  throw new  MoodAnalyserException("Message cast can't be empty",ExceptionType.EmptyString);
+		  }
+		  
+		  else if(message.contains("Sad")) {
 			  return "SAD";
 		  }
 		  else {
 			  return "HAPPY";
 		  }
-	  }catch(NullPointerException e) {
-		  return "HAPPY";
+	  }catch(MoodAnalyserException e) {
+	      
+		 System.out.println(e);
+		 return "HAPPY";
 	  }
 	
 	} 
